@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage/SignupPage.jsx";
@@ -6,6 +7,7 @@ import SignupPage from "./pages/SignupPage/SignupPage.jsx";
 export default function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
