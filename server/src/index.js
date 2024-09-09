@@ -1,25 +1,31 @@
 import "dotenv/config";
 import express from "express";
 import bcrypt from "bcrypt";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import userModel from "./models/User.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
+app.use(cors());
 connectDB();
 
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password)
-    return res.status(400).json({ msg: "All fields must be filled." });
+  try {
+    const { username, password } = req.body;
+    if (!username || !password)
+      return res.status(400).json({ msg: "All fields must be filled." });
 
-  const user = await userModel.findOne({ username });
-  if (!user) return res.status(404).json({ msg: "Username not found." });
+    const user = await userModel.findOne({ username });
+    if (!user) return res.status(404).json({ msg: "Username not found." });
 
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return res.status(401).json({ msg: "Password is incorrect." });
-  res.sendStatus(200);
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(401).json({ msg: "Password is incorrect." });
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 app.post("/signup", async (req, res) => {

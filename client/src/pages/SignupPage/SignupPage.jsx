@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./SignupPage.css";
 
 export default function SignupPage() {
@@ -8,9 +9,20 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
+    axios
+      .post(`${import.meta.env.VITE_SERVER}/signup`, {
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+      })
+      .then(() => navigate("/"))
+      .catch((err) => console.error(err));
   }
 
   return (

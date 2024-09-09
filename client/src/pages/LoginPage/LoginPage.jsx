@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./LoginPage.css";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
+    axios
+      .post(`${import.meta.env.VITE_SERVER}/login`, { username, password })
+      .then(() => navigate("/"))
+      .catch((err) => console.error(err));
   }
 
   return (
