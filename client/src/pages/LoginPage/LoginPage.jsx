@@ -6,6 +6,7 @@ import "./LoginPage.css";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errMessage, setErrMessage] = useState(null);
   const navigate = useNavigate();
 
   function handleSubmit(e) {
@@ -13,12 +14,16 @@ export default function LoginPage() {
     axios
       .post(`${import.meta.env.VITE_SERVER}/login`, { username, password })
       .then(() => navigate("/"))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setErrMessage(err.response.data.msg);
+      });
   }
 
   return (
     <div className="form-login">
       <h1>Log in to Circula</h1>
+      {errMessage && <div className="error">Error: {errMessage}</div>}
       <form onSubmit={handleSubmit}>
         <input
           className="input-box"

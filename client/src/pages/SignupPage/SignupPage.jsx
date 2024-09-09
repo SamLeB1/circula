@@ -9,6 +9,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errMessage, setErrMessage] = useState(null);
   const navigate = useNavigate();
 
   function handleSubmit(e) {
@@ -22,12 +23,16 @@ export default function SignupPage() {
         password,
       })
       .then(() => navigate("/"))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setErrMessage(err.response.data.msg);
+      });
   }
 
   return (
     <div className="form-signup">
       <h1>Create your account</h1>
+      {errMessage && <div className="error">Error: {errMessage}</div>}
       <form onSubmit={handleSubmit}>
         <input
           className="input-box"

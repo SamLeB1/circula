@@ -9,6 +9,14 @@
 .form-signup a {
   text-decoration: none;
 }
+.form-signup .error {
+  background-color: #fff2f2;
+  border: 2px solid #ff8080;
+  color: #ff0000;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  text-align: center;
+}
 .form-signup form {
   margin-bottom: 1.5rem;
 }
