@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import bcrypt from "bcrypt";
 import cors from "cors";
+import jwt from "jsonwebtoken";
 import connectDB from "./config/db.js";
 import userModel from "./models/User.js";
 
@@ -10,6 +11,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 connectDB();
+
+function createToken(_id) {
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "1d" });
+}
 
 app.post("/login", async (req, res) => {
   try {
@@ -22,7 +27,9 @@ app.post("/login", async (req, res) => {
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ msg: "Password is incorrect." });
-    res.sendStatus(200);
+    res
+      .status(200)
+      .json({ token: createToken(user._id), username: user.username });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -49,7 +56,9 @@ app.post("/signup", async (req, res) => {
       username,
       password: hash,
     });
-    res.status(201).json(user);
+    res
+      .status(201)
+      .json({ token: createToken(user._id), username: user.username });
   } catch (err) {
     res.status(500).json(err);
   }
