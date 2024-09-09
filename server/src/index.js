@@ -9,6 +9,19 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 connectDB();
 
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password)
+    return res.status(400).json({ msg: "All fields must be filled." });
+
+  const user = await userModel.findOne({ username });
+  if (!user) return res.status(404).json({ msg: "Username not found." });
+
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) return res.status(401).json({ msg: "Password is incorrect." });
+  res.sendStatus(200);
+});
+
 app.post("/signup", async (req, res) => {
   try {
     const { firstName, lastName, email, username, password } = req.body;
