@@ -16,6 +16,25 @@ function createToken(_id) {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "1d" });
 }
 
+app.get("/users", async (req, res) => {
+  try {
+    const users = await userModel.find();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.get("/users/:username", async (req, res) => {
+  try {
+    const user = await userModel.findOne({ username: req.params.username });
+    if (!user) return res.status(404).json({ msg: "User not found." });
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
