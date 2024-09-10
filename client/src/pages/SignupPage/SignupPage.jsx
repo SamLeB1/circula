@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import useSignup from "../../hooks/useSignup.jsx";
 import "./SignupPage.css";
 
 export default function SignupPage() {
@@ -9,24 +9,11 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errMessage, setErrMessage] = useState(null);
-  const navigate = useNavigate();
+  const { signup, isLoading, errMessage } = useSignup();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    axios
-      .post(`${import.meta.env.VITE_SERVER}/signup`, {
-        firstName,
-        lastName,
-        email,
-        username,
-        password,
-      })
-      .then(() => navigate("/"))
-      .catch((err) => {
-        console.error(err);
-        setErrMessage(err.response.data.msg);
-      });
+    await signup(firstName, lastName, email, username, password);
   }
 
   return (
@@ -79,7 +66,12 @@ export default function SignupPage() {
           type="password"
           value={password}
         />
-        <input className="input-submit" type="submit" value="Sign Up" />
+        <input
+          className="input-submit"
+          disabled={isLoading}
+          type="submit"
+          value="Sign Up"
+        />
       </form>
       <p>
         Already have an account? <Link to="/login">Log In</Link>
