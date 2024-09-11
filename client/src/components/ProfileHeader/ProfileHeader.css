@@ -1,0 +1,44 @@
+.profile-header {
+  background-color: #fff;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+  margin: auto;
+  padding: 2rem 2rem 0;
+  width: 70%;
+}
+.profile-header a {
+  color: #000;
+  display: block;
+  padding: 1rem 0.75rem;
+  text-decoration: none;
+}
+.profile-header a:hover {
+  background-color: #f2f2f2;
+}
+.profile-header hr {
+  margin: 0;
+}
+.profile-header .name {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.profile-header .pfp {
+  border-radius: 50%;
+  height: 168px;
+  margin-right: 1rem;
+  width: 168px;
+}
+.profile-header ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.profile-header .user {
+  align-items: center;
+  display: flex;
+  margin-bottom: 2rem;
+}
+.profile-header .username {
+  color: #808080;
+}

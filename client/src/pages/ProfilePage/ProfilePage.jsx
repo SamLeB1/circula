@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ProfileHeader from "../../components/ProfileHeader/ProfileHeader.jsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 import "./ProfilePage.css";
 
@@ -19,10 +20,5 @@ export default function ProfilePage() {
 
   if (!user && isLoading) return <></>;
   else if (!user && !isLoading) return <NotFoundPage />;
-  else
-    return (
-      <h1>
-        {user.firstName} {user.lastName} @{user.username}
-      </h1>
-    );
+  else return <ProfileHeader user={user} />;
 }
