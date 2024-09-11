@@ -1,0 +1,10 @@
+.not-found-page a {
+  text-decoration: none;
+}
+.not-found-page h1 {
+  text-align: center;
+}
+.not-found-page h3 {
+  font-weight: normal;
+  text-align: center;
+}
