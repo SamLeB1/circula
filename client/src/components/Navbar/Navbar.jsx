@@ -16,6 +16,9 @@ export default function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li>
+            <Link to={`/profile/${user.username}`}>Profile</Link>
+          </li>
+          <li>
             <Link to="/login" onClick={logout}>
               Log Out
             </Link>
