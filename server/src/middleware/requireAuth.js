@@ -12,6 +12,6 @@ export default async function (req, res, next) {
     req.user = await userModel.findById(_id);
     next();
   } catch (err) {
-    res.status(500).json(err);
+    res.status(401).json(err);
   }
 }

@@ -4,7 +4,9 @@ import bcrypt from "bcrypt";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import connectDB from "./config/db.js";
+import requireAuth from "./middleware/requireAuth.js";
 import userModel from "./models/User.js";
+import postModel from "./models/Post.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +32,23 @@ app.get("/users/:username", async (req, res) => {
     const user = await userModel.findOne({ username: req.params.username });
     if (!user) return res.status(404).json({ msg: "User not found." });
     res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.post("/posts", requireAuth, async (req, res) => {
+  try {
+    const { _id, firstName, lastName, username } = req.user;
+    const { content } = req.body;
+    const post = await postModel.create({
+      userId: _id,
+      firstName,
+      lastName,
+      username,
+      content,
+    });
+    res.status(201).json(post);
   } catch (err) {
     res.status(500).json(err);
   }
