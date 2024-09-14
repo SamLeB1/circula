@@ -37,6 +37,15 @@ app.get("/users/:username", async (req, res) => {
   }
 });
 
+app.get("/posts", async (req, res) => {
+  try {
+    const posts = await postModel.find();
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 app.post("/posts", requireAuth, async (req, res) => {
   try {
     const { _id, firstName, lastName, username } = req.user;
