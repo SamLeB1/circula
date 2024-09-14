@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Post from "../../components/Post/Post.jsx";
+import PostForm from "../../components/PostForm/PostForm.jsx";
 import "./HomePage.css";
 
 export default function HomePage() {
@@ -14,10 +15,13 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="posts">
-      {posts.map((post, index) => {
-        return <Post key={index} post={post} />;
-      })}
+    <div className="home-page">
+      <PostForm setPosts={setPosts} />
+      <div className="posts">
+        {posts.map((post, index) => {
+          return <Post key={index} post={post} />;
+        })}
+      </div>
     </div>
   );
 }

@@ -50,6 +50,8 @@ app.post("/posts", requireAuth, async (req, res) => {
   try {
     const { _id, firstName, lastName, username } = req.user;
     const { content } = req.body;
+    if (!content)
+      return res.status(400).json({ msg: "Post content can't be empty." });
     const post = await postModel.create({
       userId: _id,
       firstName,
