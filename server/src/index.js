@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import cors from "cors";
 import jwt from "jsonwebtoken";
@@ -7,6 +8,7 @@ import connectDB from "./config/db.js";
 import requireAuth from "./middleware/requireAuth.js";
 import userModel from "./models/User.js";
 import postModel from "./models/Post.js";
+import commentModel from "./models/Comment.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -60,6 +62,39 @@ app.post("/posts", requireAuth, async (req, res) => {
       content,
     });
     res.status(201).json(post);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.get("/comments", async (req, res) => {
+  try {
+    if (req.query.postId) {
+      const comments = await commentModel.find({ postId: req.query.postId });
+      return res.status(200).json(comments);
+    }
+    const comments = await commentModel.find();
+    res.status(200).json(comments);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.post("/comments", requireAuth, async (req, res) => {
+  try {
+    const { _id: userId, firstName, lastName, username } = req.user;
+    const { postId, content } = req.body;
+    if (!content)
+      return res.status(400).json({ msg: "Comment content can't be empty." });
+    const comment = await commentModel.create({
+      postId,
+      userId,
+      firstName,
+      lastName,
+      username,
+      content,
+    });
+    res.status(201).json(comment);
   } catch (err) {
     res.status(500).json(err);
   }
