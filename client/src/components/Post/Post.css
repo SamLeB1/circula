@@ -8,7 +8,7 @@
   word-wrap: break-word;
 }
 .post .content {
-  margin: 0;
+  margin: 0 0 1rem;
 }
 .post .pfp {
   border-radius: 50%;

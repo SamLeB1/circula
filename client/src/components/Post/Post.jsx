@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BtnComment from "../BtnComment/BtnComment.jsx";
 import pfp from "../../assets/images/pfp.png";
 import "./Post.css";
 
@@ -13,6 +14,7 @@ export default function Post({ post }) {
         </div>
       </Link>
       <p className="content">{post.content}</p>
+      <BtnComment post={post} />
     </div>
   );
 }

@@ -23,6 +23,7 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
+    comments: [Schema.Types.ObjectId],
   },
   { timestamps: true }
 );

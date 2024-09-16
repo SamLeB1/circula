@@ -86,6 +86,10 @@ app.post("/comments", requireAuth, async (req, res) => {
     const { postId, content } = req.body;
     if (!content)
       return res.status(400).json({ msg: "Comment content can't be empty." });
+
+    const post = await postModel.findById(postId);
+    if (!post) return res.status(404).json({ msg: "Post not found." });
+
     const comment = await commentModel.create({
       postId,
       userId,
@@ -94,6 +98,8 @@ app.post("/comments", requireAuth, async (req, res) => {
       username,
       content,
     });
+    post.comments.push(comment._id);
+    await post.save();
     res.status(201).json(comment);
   } catch (err) {
     res.status(500).json(err);
