@@ -2,13 +2,45 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
   height: 90vh;
+  justify-content: space-between;
   left: 50%;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 550px;
   z-index: 2;
+}
+.post-modal .comment-form {
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.25);
+  padding: 0.75rem;
+}
+.post-modal .comment-form input {
+  background-color: #5cb3ff;
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 1rem;
+  margin: auto;
+  padding: 0.5rem 1rem;
+}
+.post-modal .comment-form input:hover {
+  background-color: #39a3ff;
+}
+.post-modal .comment-form textarea {
+  display: block;
+  margin: 0 auto 0.75rem;
+  max-height: 50vh;
+  padding: 0.5rem;
+  resize: vertical;
+  width: 80%;
+}
+.post-modal .comment-form textarea::placeholder {
+  font-size: 1rem;
 }
 .post-modal .top-bar {
   align-items: center;
