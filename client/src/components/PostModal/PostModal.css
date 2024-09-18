@@ -1,5 +1,7 @@
 .post-modal {
   background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
   height: 90vh;
   left: 50%;
   position: fixed;
@@ -7,4 +9,30 @@
   transform: translate(-50%, -50%);
   width: 550px;
   z-index: 2;
+}
+.post-modal .top-bar {
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  padding: 0.75rem;
+}
+.post-modal .top-bar button {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.post-modal .top-bar button:hover {
+  background-color: #e6e6e6;
+}
+.post-modal .top-bar img {
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+.post-modal .top-bar h1 {
+  flex: 1;
+  margin: 0;
+  text-align: center;
 }
