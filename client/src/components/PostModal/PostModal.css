@@ -42,6 +42,29 @@
 .post-modal .comment-form textarea::placeholder {
   font-size: 1rem;
 }
+.post-modal .post-view {
+  padding: 0.75rem;
+  word-wrap: break-word;
+}
+.post-modal .post-view .content {
+  margin: 0;
+}
+.post-modal .post-view .pfp {
+  border-radius: 50%;
+  height: 40px;
+  margin-right: 0.5rem;
+  width: 40px;
+}
+.post-modal .post-view .user {
+  align-items: center;
+  color: #000;
+  display: inline-flex;
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+.post-modal .post-view .username {
+  color: #808080;
+}
 .post-modal .top-bar {
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);

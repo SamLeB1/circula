@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
+import pfp from "../../assets/images/pfp.png";
 import iconClose from "../../assets/images/icon-close.svg";
 import "./PostModal.css";
 
@@ -37,6 +39,16 @@ export default function PostModal({ post, isOpen, setIsOpen }) {
             <button onClick={() => setIsOpen(false)} type="button">
               <img src={iconClose} alt="Close" title="Close" />
             </button>
+          </div>
+          <div className="post-view">
+            <Link className="user" to={`/profile/${post.username}`}>
+              <img className="pfp" src={pfp} alt="" />
+              <div className="name">
+                {post.firstName} {post.lastName}{" "}
+                <span className="username">@{post.username}</span>
+              </div>
+            </Link>
+            <p className="content">{post.content}</p>
           </div>
           <form className="comment-form" onSubmit={handleSubmit}>
             <textarea
