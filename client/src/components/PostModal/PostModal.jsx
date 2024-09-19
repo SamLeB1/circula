@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -9,7 +9,15 @@ import "./PostModal.css";
 
 export default function PostModal({ post, isOpen, setIsOpen }) {
   const [content, setContent] = useState("");
+  const [comments, setComments] = useState([]);
   const { user } = useAuthContext();
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_SERVER}/comments?postId=${post._id}`)
+      .then((res) => setComments(res.data.reverse()))
+      .catch((err) => console.error(err));
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -23,7 +31,10 @@ export default function PostModal({ post, isOpen, setIsOpen }) {
           },
         }
       )
-      .then((res) => setContent(""))
+      .then((res) => {
+        setContent("");
+        setComments((comments) => [res.data, ...comments]);
+      })
       .catch((err) => console.error(err));
   }
 
@@ -40,15 +51,34 @@ export default function PostModal({ post, isOpen, setIsOpen }) {
               <img src={iconClose} alt="Close" title="Close" />
             </button>
           </div>
-          <div className="post-view">
-            <Link className="user" to={`/profile/${post.username}`}>
-              <img className="pfp" src={pfp} alt="" />
-              <div className="name">
-                {post.firstName} {post.lastName}{" "}
-                <span className="username">@{post.username}</span>
-              </div>
-            </Link>
-            <p className="content">{post.content}</p>
+          <div className="post-open">
+            <div className="post-view">
+              <Link className="user" to={`/profile/${post.username}`}>
+                <img className="pfp" src={pfp} alt="" />
+                <div className="name">
+                  {post.firstName} {post.lastName}{" "}
+                  <span className="username">@{post.username}</span>
+                </div>
+              </Link>
+              <p className="content">{post.content}</p>
+            </div>
+            <hr />
+            <div className="comments">
+              {comments.map((comment, index) => {
+                return (
+                  <div key={index} className="comment">
+                    <Link className="user" to={`/profile/${comment.username}`}>
+                      <img className="pfp" src={pfp} alt="" />
+                      <div className="name">
+                        {comment.firstName} {comment.lastName}{" "}
+                        <span className="username">@{comment.username}</span>
+                      </div>
+                    </Link>
+                    <p className="content">{comment.content}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <form className="comment-form" onSubmit={handleSubmit}>
             <textarea

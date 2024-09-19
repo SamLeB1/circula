@@ -13,6 +13,9 @@
   width: 550px;
   z-index: 2;
 }
+.post-modal hr {
+  margin: 0;
+}
 .post-modal .comment-form {
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.25);
   padding: 0.75rem;
@@ -41,6 +44,9 @@
 }
 .post-modal .comment-form textarea::placeholder {
   font-size: 1rem;
+}
+.post-modal .post-open {
+  overflow-y: scroll;
 }
 .post-modal .post-view {
   padding: 0.75rem;
