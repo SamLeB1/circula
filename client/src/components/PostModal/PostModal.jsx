@@ -7,7 +7,7 @@ import pfp from "../../assets/images/pfp.png";
 import iconClose from "../../assets/images/icon-close.svg";
 import "./PostModal.css";
 
-export default function PostModal({ post, isOpen, setIsOpen }) {
+export default function PostModal({ post, setIsOpen }) {
   const [content, setContent] = useState("");
   const [comments, setComments] = useState([]);
   const { user } = useAuthContext();
@@ -38,60 +38,68 @@ export default function PostModal({ post, isOpen, setIsOpen }) {
       .catch((err) => console.error(err));
   }
 
-  if (!isOpen) return null;
-  else
-    return createPortal(
-      <>
-        <div className="overlay" onClick={() => setIsOpen(false)} />
-        <div className="post-modal">
-          <div className="top-bar">
-            <div style={{ height: "36px", width: "36px" }} />
-            <h1>{post.firstName}'s Post</h1>
-            <button onClick={() => setIsOpen(false)} type="button">
-              <img src={iconClose} alt="Close" title="Close" />
-            </button>
+  return createPortal(
+    <>
+      <div className="overlay" onClick={() => setIsOpen(false)} />
+      <div className="post-modal">
+        <div className="top-bar">
+          <div style={{ height: "36px", width: "36px" }} />
+          <h1>{post.firstName}'s Post</h1>
+          <button onClick={() => setIsOpen(false)} type="button">
+            <img src={iconClose} alt="Close" title="Close" />
+          </button>
+        </div>
+        <div className="post-open">
+          <div className="post-view">
+            <Link className="user" to={`/profile/${post.username}`}>
+              <img className="pfp" src={pfp} alt="" />
+              <div className="name">
+                {post.firstName} {post.lastName}{" "}
+                <span className="username">@{post.username}</span>
+              </div>
+            </Link>
+            <p className="content">{post.content}</p>
           </div>
-          <div className="post-open">
-            <div className="post-view">
-              <Link className="user" to={`/profile/${post.username}`}>
-                <img className="pfp" src={pfp} alt="" />
-                <div className="name">
-                  {post.firstName} {post.lastName}{" "}
-                  <span className="username">@{post.username}</span>
-                </div>
-              </Link>
-              <p className="content">{post.content}</p>
-            </div>
-            <hr />
-            <div className="comments">
-              {comments.map((comment, index) => {
-                return (
-                  <div key={index} className="comment">
-                    <Link className="user" to={`/profile/${comment.username}`}>
-                      <img className="pfp" src={pfp} alt="" />
-                      <div className="name">
-                        {comment.firstName} {comment.lastName}{" "}
-                        <span className="username">@{comment.username}</span>
-                      </div>
+          <hr />
+          <div className="comments">
+            {comments.length === 1 ? (
+              <h2>1 Comment</h2>
+            ) : (
+              <h2>{comments.length} Comments</h2>
+            )}
+            {comments.map((comment, index) => {
+              return (
+                <div key={index} className="comment">
+                  <Link
+                    className="pfp-link"
+                    to={`/profile/${comment.username}`}
+                  >
+                    <img className="pfp" src={pfp} alt="" />
+                  </Link>
+                  <div className="comment-bubble">
+                    <Link className="name" to={`/profile/${comment.username}`}>
+                      {comment.firstName} {comment.lastName}{" "}
+                      <span className="username">@{comment.username}</span>
                     </Link>
                     <p className="content">{comment.content}</p>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
-          <form className="comment-form" onSubmit={handleSubmit}>
-            <textarea
-              id="content"
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Write a comment..."
-              rows="4"
-              value={content}
-            />
-            <input disabled={content === ""} type="submit" value="Post" />
-          </form>
         </div>
-      </>,
-      document.getElementById("overlays")
-    );
+        <form className="comment-form" onSubmit={handleSubmit}>
+          <textarea
+            id="content"
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Write a comment..."
+            rows="4"
+            value={content}
+          />
+          <input disabled={content === ""} type="submit" value="Post" />
+        </form>
+      </div>
+    </>,
+    document.getElementById("overlays")
+  );
 }

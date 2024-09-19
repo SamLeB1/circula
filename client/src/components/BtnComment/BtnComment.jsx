@@ -15,7 +15,7 @@ export default function BtnComment({ post }) {
         <img src={iconComment} alt="Comment" />
         <span>{post.comments.length}</span>
       </div>
-      <PostModal post={post} isOpen={isOpen} setIsOpen={setIsOpen} />
+      {isOpen && <PostModal post={post} setIsOpen={setIsOpen} />}
     </>
   );
 }
