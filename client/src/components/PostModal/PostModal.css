@@ -98,12 +98,16 @@
   margin-right: 0.5rem;
   width: 40px;
 }
+.post-modal .post-view .post-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
 .post-modal .post-view .user {
   align-items: center;
   color: #000;
   display: inline-flex;
   font-weight: bold;
-  margin-bottom: 1rem;
   text-decoration: none;
 }
 .post-modal .post-view .username {

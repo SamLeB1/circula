@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
+import PostDropdown from "../PostDropdown/PostDropdown.jsx";
 import pfp from "../../assets/images/pfp.png";
 import iconClose from "../../assets/images/icon-close.svg";
 import "./PostModal.css";
@@ -47,19 +48,22 @@ export default function PostModal({ post, setIsOpen }) {
         <div className="top-bar">
           <div style={{ height: "36px", width: "36px" }} />
           <h1>{post.firstName}'s Post</h1>
-          <button onClick={() => setIsOpen(false)} type="button">
-            <img src={iconClose} alt="Close" title="Close" />
+          <button onClick={() => setIsOpen(false)} type="button" title="Close">
+            <img src={iconClose} alt="Close" />
           </button>
         </div>
         <div className="post-open">
           <div className="post-view">
-            <Link className="user" to={`/profile/${post.username}`}>
-              <img className="pfp" src={pfp} alt="" />
-              <div className="name">
-                {post.firstName} {post.lastName}{" "}
-                <span className="username">@{post.username}</span>
-              </div>
-            </Link>
+            <div className="post-top">
+              <Link className="user" to={`/profile/${post.username}`}>
+                <img className="pfp" src={pfp} alt="" />
+                <div className="name">
+                  {post.firstName} {post.lastName}{" "}
+                  <span className="username">@{post.username}</span>
+                </div>
+              </Link>
+              <PostDropdown />
+            </div>
             <p className="content">{post.content}</p>
           </div>
           <hr />
