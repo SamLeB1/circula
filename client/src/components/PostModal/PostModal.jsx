@@ -13,10 +13,12 @@ export default function PostModal({ post, setIsOpen }) {
   const { user } = useAuthContext();
 
   useEffect(() => {
+    document.body.classList.add("disable-scroll");
     axios
       .get(`${import.meta.env.VITE_SERVER}/comments?postId=${post._id}`)
       .then((res) => setComments(res.data.reverse()))
       .catch((err) => console.error(err));
+    return () => document.body.classList.remove("disable-scroll");
   }, []);
 
   function handleSubmit(e) {
