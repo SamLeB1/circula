@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import useClickOutside from "../../hooks/useClickOutside.jsx";
 import iconMore from "../../assets/images/icon-more.svg";
 import iconDelete from "../../assets/images/icon-delete.svg";
 import "./PostDropdown.css";
 
 export default function PostDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  useClickOutside(dropdownRef, () => setIsOpen(false));
+
   return (
-    <div className="post-dropdown">
+    <div ref={dropdownRef} className="post-dropdown">
       <button
         className="btn-more"
         type="button"
