@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
+import usePostsContext from "../../hooks/usePostsContext.jsx";
 import "./PostForm.css";
 
-export default function PostForm({ setPosts }) {
+export default function PostForm() {
   const [content, setContent] = useState("");
   const { user } = useAuthContext();
+  const { dispatch } = usePostsContext();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -21,7 +23,7 @@ export default function PostForm({ setPosts }) {
       )
       .then((res) => {
         setContent("");
-        setPosts((posts) => [res.data, ...posts]);
+        dispatch({ type: "ADD", payload: res.data });
       })
       .catch((err) => console.error(err));
   }
