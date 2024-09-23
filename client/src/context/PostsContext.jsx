@@ -8,6 +8,12 @@ export function postsReducer(state, action) {
       return { posts: action.payload };
     case "ADD":
       return { posts: [action.payload, ...state.posts] };
+    case "REMOVE":
+      return {
+        posts: state.posts.filter((post) => {
+          return post._id !== action.payload;
+        }),
+      };
     default:
       return state;
   }

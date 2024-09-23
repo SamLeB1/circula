@@ -15,7 +15,7 @@ export default function Post({ post }) {
             <span className="username">@{post.username}</span>
           </div>
         </Link>
-        <PostDropdown />
+        <PostDropdown post={post} />
       </div>
       <p className="content">{post.content}</p>
       <BtnComment post={post} />

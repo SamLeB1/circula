@@ -68,7 +68,7 @@ export default function PostModal({ post }) {
                   <span className="username">@{post.username}</span>
                 </div>
               </Link>
-              <PostDropdown />
+              <PostDropdown post={post} />
             </div>
             <p className="content">{post.content}</p>
           </div>
