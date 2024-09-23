@@ -3,15 +3,17 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
+import usePostModalContext from "../../hooks/usePostModalContext.jsx";
 import PostDropdown from "../PostDropdown/PostDropdown.jsx";
 import pfp from "../../assets/images/pfp.png";
 import iconClose from "../../assets/images/icon-close.svg";
 import "./PostModal.css";
 
-export default function PostModal({ post, setIsOpen }) {
+export default function PostModal({ post }) {
   const [content, setContent] = useState("");
   const [comments, setComments] = useState([]);
   const { user } = useAuthContext();
+  const { dispatch } = usePostModalContext();
 
   useEffect(() => {
     document.body.classList.add("disable-scroll");
@@ -43,12 +45,16 @@ export default function PostModal({ post, setIsOpen }) {
 
   return createPortal(
     <>
-      <div className="overlay" onClick={() => setIsOpen(false)} />
+      <div className="overlay" onClick={() => dispatch({ type: "CLOSE" })} />
       <div className="post-modal">
         <div className="top-bar">
           <div style={{ height: "36px", width: "36px" }} />
           <h1>{post.firstName}'s Post</h1>
-          <button onClick={() => setIsOpen(false)} type="button" title="Close">
+          <button
+            onClick={() => dispatch({ type: "CLOSE" })}
+            type="button"
+            title="Close"
+          >
             <img src={iconClose} alt="Close" />
           </button>
         </div>
