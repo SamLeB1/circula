@@ -55,6 +55,7 @@
 .post-modal .comment-form {
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.25);
   padding: 0.75rem;
+  z-index: 3;
 }
 .post-modal .comment-form input {
   background-color: #5cb3ff;
@@ -118,6 +119,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   padding: 0.75rem;
+  z-index: 3;
 }
 .post-modal .top-bar button {
   background-color: #f2f2f2;
