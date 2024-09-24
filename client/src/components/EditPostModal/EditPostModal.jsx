@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import usePostModalContext from "../../hooks/usePostModalContext.jsx";
 import "./EditPostModal.css";
 
 export default function EditPostModal({ post, setIsOpen }) {
   const [content, setContent] = useState(post.content);
+  const { isOpen: isOpenPostModal } = usePostModalContext();
 
   function handleSubmit() {
     e.preventDefault();
   }
+
+  useEffect(() => {
+    if (!isOpenPostModal) document.body.classList.add("disable-scroll");
+    const input = document.getElementById("edit-content");
+    const length = input.value.length;
+    input.focus();
+    input.setSelectionRange(length, length);
+    return () => {
+      if (!isOpenPostModal) document.body.classList.remove("disable-scroll");
+    };
+  }, []);
 
   return createPortal(
     <>
@@ -20,7 +33,7 @@ export default function EditPostModal({ post, setIsOpen }) {
         <h1>Edit Post</h1>
         <form className="edit-post-form" onSubmit={handleSubmit}>
           <textarea
-            id="content"
+            id="edit-content"
             onChange={(e) => setContent(e.target.value)}
             rows="4"
             value={content}
