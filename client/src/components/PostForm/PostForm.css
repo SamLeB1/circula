@@ -21,7 +21,9 @@
   background-color: #39a3ff;
 }
 .post-form textarea {
+  border: 1px solid #000;
   display: block;
+  font-size: 1rem;
   margin: 0 auto 0.75rem;
   padding: 0.5rem;
   resize: vertical;
