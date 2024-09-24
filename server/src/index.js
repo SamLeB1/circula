@@ -67,6 +67,30 @@ app.post("/posts", requireAuth, async (req, res) => {
   }
 });
 
+app.patch("/posts/:postId", requireAuth, async (req, res) => {
+  try {
+    const { content } = req.body;
+    const { postId } = req.params;
+    if (!content)
+      return res.status(400).json({ msg: "Post content can't be empty." });
+    if (!mongoose.Types.ObjectId.isValid(postId))
+      return res.status(400).json({ msg: "Invalid post id." });
+
+    const post = await postModel.findById(postId);
+    if (!post) return res.status(404).json({ msg: "Post not found." });
+    if (!req.user._id.equals(post.userId))
+      return res
+        .status(401)
+        .json({ msg: "User id doesn't match user id from post." });
+
+    post.content = content;
+    await post.save();
+    res.sendStatus(204);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 app.delete("/posts/:postId", requireAuth, async (req, res) => {
   try {
     const { postId } = req.params;
