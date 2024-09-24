@@ -18,6 +18,7 @@
   cursor: pointer;
   display: flex;
   padding: 0.5rem 0.75rem;
+  width: 100%;
 }
 .post-dropdown .dropdown-btn:hover {
   background-color: #e6e6e6;
