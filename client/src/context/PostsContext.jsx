@@ -14,6 +14,14 @@ export function postsReducer(state, action) {
           return post._id !== action.payload;
         }),
       };
+    case "REPLACE":
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === action.payload._id
+      );
+      if (postIndex === -1) break;
+      let posts = [...state.posts];
+      posts[postIndex] = action.payload;
+      return { posts };
     default:
       return state;
   }

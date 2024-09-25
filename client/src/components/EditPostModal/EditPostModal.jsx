@@ -1,14 +1,37 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import axios from "axios";
+import useAuthContext from "../../hooks/useAuthContext.jsx";
+import usePostsContext from "../../hooks/usePostsContext.jsx";
 import usePostModalContext from "../../hooks/usePostModalContext.jsx";
 import "./EditPostModal.css";
 
 export default function EditPostModal({ post, setIsOpen }) {
   const [content, setContent] = useState(post.content);
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuthContext();
+  const { dispatch } = usePostsContext();
   const { isOpen: isOpenPostModal } = usePostModalContext();
 
-  function handleSubmit() {
+  function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
+    axios
+      .patch(
+        `${import.meta.env.VITE_SERVER}/posts/${post._id}`,
+        { content },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .then((res) => {
+        dispatch({ type: "REPLACE", payload: res.data });
+        setIsOpen(false);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setIsLoading(false));
   }
 
   useEffect(() => {
@@ -27,7 +50,9 @@ export default function EditPostModal({ post, setIsOpen }) {
       <div
         className="overlay"
         style={{ zIndex: 11 }}
-        onClick={() => setIsOpen(false)}
+        onClick={() => {
+          if (!isLoading) setIsOpen(false);
+        }}
       />
       <div className="edit-post-modal">
         <h1>Edit Post</h1>
@@ -38,7 +63,11 @@ export default function EditPostModal({ post, setIsOpen }) {
             rows="4"
             value={content}
           />
-          <input disabled={content === ""} type="submit" value="Save" />
+          <input
+            disabled={isLoading || content === ""}
+            type="submit"
+            value="Save"
+          />
         </form>
       </div>
     </>,

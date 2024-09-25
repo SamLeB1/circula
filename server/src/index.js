@@ -76,7 +76,7 @@ app.patch("/posts/:postId", requireAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(postId))
       return res.status(400).json({ msg: "Invalid post id." });
 
-    const post = await postModel.findById(postId);
+    let post = await postModel.findById(postId);
     if (!post) return res.status(404).json({ msg: "Post not found." });
     if (!req.user._id.equals(post.userId))
       return res
@@ -85,7 +85,7 @@ app.patch("/posts/:postId", requireAuth, async (req, res) => {
 
     post.content = content;
     await post.save();
-    res.sendStatus(204);
+    res.status(200).json(post);
   } catch (err) {
     res.status(500).json(err);
   }
