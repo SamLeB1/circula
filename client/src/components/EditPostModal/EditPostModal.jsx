@@ -4,6 +4,7 @@ import axios from "axios";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
 import usePostsContext from "../../hooks/usePostsContext.jsx";
 import usePostModalContext from "../../hooks/usePostModalContext.jsx";
+import iconClose from "../../assets/images/icon-close.svg";
 import "./EditPostModal.css";
 
 export default function EditPostModal({ post, setIsOpen }) {
@@ -55,7 +56,19 @@ export default function EditPostModal({ post, setIsOpen }) {
         }}
       />
       <div className="edit-post-modal">
-        <h1>Edit Post</h1>
+        <div className="top-bar">
+          <div style={{ height: "36px", width: "36px" }} />
+          <h1>Edit Post</h1>
+          <button
+            onClick={() => {
+              if (!isLoading) setIsOpen(false);
+            }}
+            type="button"
+            title="Close"
+          >
+            <img src={iconClose} alt="Close" />
+          </button>
+        </div>
         <form className="edit-post-form" onSubmit={handleSubmit}>
           <textarea
             id="edit-content"
