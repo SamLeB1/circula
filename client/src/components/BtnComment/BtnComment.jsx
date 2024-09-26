@@ -7,14 +7,15 @@ export default function BtnComment({ post }) {
   const { postId, isOpen, dispatch } = usePostModalContext();
   return (
     <>
-      <div
+      <button
         className="btn-comment"
         onClick={() => dispatch({ type: "OPEN", payload: post._id })}
         title="Comment"
+        type="button"
       >
         <img src={iconComment} alt="Comment" />
         <span>{post.comments.length}</span>
-      </div>
+      </button>
       {post._id === postId && isOpen && <PostModal post={post} />}
     </>
   );
