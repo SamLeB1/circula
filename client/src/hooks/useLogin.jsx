@@ -13,7 +13,7 @@ export default function useLogin() {
     setIsLoading(true);
     setErrMessage(null);
     axios
-      .post(`${import.meta.env.VITE_SERVER}/login`, { username, password })
+      .post(`${import.meta.env.VITE_SERVER}/auth/login`, { username, password })
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         dispatch({ type: "LOGIN", payload: res.data });

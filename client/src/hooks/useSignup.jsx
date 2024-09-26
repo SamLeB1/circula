@@ -13,7 +13,7 @@ export default function useSignup() {
     setIsLoading(true);
     setErrMessage(null);
     axios
-      .post(`${import.meta.env.VITE_SERVER}/signup`, {
+      .post(`${import.meta.env.VITE_SERVER}/auth/signup`, {
         firstName,
         lastName,
         email,
