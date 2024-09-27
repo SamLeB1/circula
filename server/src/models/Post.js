@@ -24,6 +24,7 @@ const postSchema = new Schema(
       required: true,
     },
     comments: [Schema.Types.ObjectId],
+    likes: [Schema.Types.ObjectId],
   },
   { timestamps: true }
 );

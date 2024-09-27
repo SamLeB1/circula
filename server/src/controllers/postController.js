@@ -54,6 +54,22 @@ export const updatePost = async (req, res) => {
   }
 };
 
+export const likePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(postId))
+      return res.status(400).json({ msg: "Invalid post id." });
+    
+    let post = await postModel.findById(postId);
+    if (post.likes.includes(req.user._id)) post.likes.remove(req.user._id);
+    else post.likes.push(req.user._id);
+    await post.save();
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 export const deletePost = async (req, res) => {
   try {
     const { postId } = req.params;
