@@ -5,6 +5,7 @@ import axios from "axios";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
 import usePostModalContext from "../../hooks/usePostModalContext.jsx";
 import PostDropdown from "../PostDropdown/PostDropdown.jsx";
+import BtnLike from "../BtnLike/BtnLike.jsx";
 import pfp from "../../assets/images/pfp.png";
 import iconClose from "../../assets/images/icon-close.svg";
 import "./PostModal.css";
@@ -71,6 +72,7 @@ export default function PostModal({ post }) {
               <PostDropdown post={post} />
             </div>
             <p className="content">{post.content}</p>
+            <BtnLike post={post} />
           </div>
           <hr />
           <div className="comments">

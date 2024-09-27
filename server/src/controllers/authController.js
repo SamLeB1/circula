@@ -19,7 +19,11 @@ export const login = async (req, res) => {
     if (!match) return res.status(401).json({ msg: "Password is incorrect." });
     res
       .status(200)
-      .json({ token: createToken(user._id), username: user.username });
+      .json({
+        token: createToken(user._id),
+        _id: user._id,
+        username: user.username,
+      });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -46,9 +50,11 @@ export const signup = async (req, res) => {
       username,
       password: hash,
     });
-    res
-      .status(201)
-      .json({ token: createToken(user._id), username: user.username });
+    res.status(201).json({
+      token: createToken(user._id),
+      _id: user._id,
+      username: user.username,
+    });
   } catch (err) {
     res.status(500).json(err);
   }

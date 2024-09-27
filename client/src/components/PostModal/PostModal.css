@@ -93,7 +93,7 @@
   word-wrap: break-word;
 }
 .post-modal .post-view .content {
-  margin: 0;
+  margin: 0 0 1rem;
 }
 .post-modal .post-view .pfp {
   border-radius: 50%;

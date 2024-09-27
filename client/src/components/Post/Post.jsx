@@ -19,7 +19,7 @@ export default function Post({ post }) {
         <PostDropdown post={post} />
       </div>
       <p className="content">{post.content}</p>
-      <BtnLike />
+      <BtnLike post={post} />
       <BtnComment post={post} />
     </div>
   );
