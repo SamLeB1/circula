@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import ProfileHeader from "../../components/ProfileHeader/ProfileHeader.jsx";
+import ProfileHeader from "../../components/profile/ProfileHeader/ProfileHeader.jsx";
+import ProfileOverview from "../../components/profile/ProfileOverview/ProfileOverview.jsx";
+import ProfilePosts from "../../components/profile/ProfilePosts/ProfilePosts.jsx";
+import ProfileAbout from "../../components/profile/ProfileAbout/ProfileAbout.jsx";
+import ProfileFriends from "../../components/profile/ProfileFriends/ProfileFriends.jsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 import "./ProfilePage.css";
 
 export default function ProfilePage() {
+  const [tab, setTab] = useState("overview");
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { username } = useParams();
@@ -20,5 +25,14 @@ export default function ProfilePage() {
 
   if (!user && isLoading) return <></>;
   else if (!user && !isLoading) return <NotFoundPage />;
-  else return <ProfileHeader user={user} />;
+  else
+    return (
+      <div className="profile-page">
+        <ProfileHeader user={user} setTab={setTab} />
+        {tab === "overview" && <ProfileOverview />}
+        {tab === "posts" && <ProfilePosts />}
+        {tab === "about" && <ProfileAbout />}
+        {tab === "friends" && <ProfileFriends />}
+      </div>
+    );
 }

@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
-import pfp from "../../assets/images/pfp.png";
+import pfp from "../../../assets/images/pfp.png";
 import "./ProfileHeader.css";
 
-export default function ProfileHeader({ user }) {
+export default function ProfileHeader({ user, setTab }) {
   return (
     <div className="profile-header">
       <div className="user">
@@ -17,13 +16,16 @@ export default function ProfileHeader({ user }) {
       <hr />
       <ul className="profile-nav">
         <li>
-          <Link to="#">Posts</Link>
+          <button onClick={() => setTab("overview")}>Overview</button>
         </li>
         <li>
-          <Link to="#">About</Link>
+          <button onClick={() => setTab("posts")}>Posts</button>
         </li>
         <li>
-          <Link to="#">Friends</Link>
+          <button onClick={() => setTab("about")}>About</button>
+        </li>
+        <li>
+          <button onClick={() => setTab("friends")}>Friends</button>
         </li>
       </ul>
     </div>

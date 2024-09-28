@@ -6,15 +6,6 @@
   padding: 2rem 2rem 0;
   width: 70%;
 }
-.profile-header a {
-  color: #000;
-  display: block;
-  padding: 1rem 0.75rem;
-  text-decoration: none;
-}
-.profile-header a:hover {
-  background-color: #f2f2f2;
-}
 .profile-header hr {
   margin: 0;
 }
@@ -28,11 +19,20 @@
   margin-right: 1rem;
   width: 168px;
 }
-.profile-header ul {
+.profile-header .profile-nav {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
+}
+.profile-header .profile-nav button {
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 1rem 0.75rem;
+}
+.profile-header .profile-nav button:hover {
+  background-color: #f2f2f2;
 }
 .profile-header .user {
   align-items: center;
