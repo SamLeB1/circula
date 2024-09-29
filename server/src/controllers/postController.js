@@ -4,6 +4,13 @@ import commentModel from "../models/Comment.js";
 
 export const getPosts = async (req, res) => {
   try {
+    if (req.query.userId) {
+      const { userId } = req.query;
+      if (!mongoose.Types.ObjectId.isValid(userId))
+        return res.status(400).json({ msg: "Invalid user id." });
+      const posts = await postModel.find({ userId });
+      return res.status(200).json(posts);
+    }
     const posts = await postModel.find();
     res.status(200).json(posts);
   } catch (err) {

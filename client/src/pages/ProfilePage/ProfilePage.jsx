@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import usePostsContext from "../../hooks/usePostsContext.jsx";
 import ProfileHeader from "../../components/profile/ProfileHeader/ProfileHeader.jsx";
 import ProfileOverview from "../../components/profile/ProfileOverview/ProfileOverview.jsx";
 import ProfilePosts from "../../components/profile/ProfilePosts/ProfilePosts.jsx";
@@ -14,11 +15,18 @@ export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { username } = useParams();
+  const { posts, dispatch } = usePostsContext();
 
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_SERVER}/users/${username}`)
-      .then((res) => setUser(res.data))
+      .then((res) => {
+        setUser(res.data);
+        return axios.get(
+          `${import.meta.env.VITE_SERVER}/posts?userId=${res.data._id}`
+        );
+      })
+      .then((res) => dispatch({ type: "SET", payload: res.data.reverse() }))
       .catch((err) => console.error(err))
       .finally(() => setIsLoading(false));
   }, [username]);
@@ -30,7 +38,7 @@ export default function ProfilePage() {
       <div className="profile-page">
         <ProfileHeader user={user} setTab={setTab} />
         {tab === "overview" && <ProfileOverview />}
-        {tab === "posts" && <ProfilePosts />}
+        {tab === "posts" && <ProfilePosts posts={posts} />}
         {tab === "about" && <ProfileAbout />}
         {tab === "friends" && <ProfileFriends />}
       </div>
