@@ -12,12 +12,14 @@ import "./ProfilePage.css";
 
 export default function ProfilePage() {
   const [tab, setTab] = useState("overview");
+  const [sortPostsOption, setSortPostsOption] = useState("newest");
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { username } = useParams();
   const { posts, dispatch } = usePostsContext();
 
   useEffect(() => {
+    setSortPostsOption("newest");
     axios
       .get(`${import.meta.env.VITE_SERVER}/users/${username}`)
       .then((res) => {
@@ -40,7 +42,14 @@ export default function ProfilePage() {
       <div className="profile-page">
         <ProfileHeader user={user} setTab={setTab} />
         {tab === "overview" && <ProfileOverview />}
-        {tab === "posts" && <ProfilePosts posts={posts} />}
+        {tab === "posts" && (
+          <ProfilePosts
+            user={user}
+            posts={posts}
+            sortPostsOption={sortPostsOption}
+            setSortPostsOption={setSortPostsOption}
+          />
+        )}
         {tab === "about" && <ProfileAbout />}
         {tab === "friends" && <ProfileFriends />}
       </div>

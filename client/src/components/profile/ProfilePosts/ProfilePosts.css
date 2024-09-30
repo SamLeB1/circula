@@ -1,0 +1,10 @@
+.profile-posts {
+  margin: auto;
+  width: fit-content;
+}
+.profile-posts .sort-posts {
+  margin: 1.25rem 0;
+}
+.profile-posts .sort-posts label {
+  margin-right: 0.5rem;
+}
