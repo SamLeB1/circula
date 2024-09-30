@@ -23,10 +23,12 @@ export default function ProfilePage() {
       .then((res) => {
         setUser(res.data);
         return axios.get(
-          `${import.meta.env.VITE_SERVER}/posts?userId=${res.data._id}`
+          `${import.meta.env.VITE_SERVER}/posts?userId=${
+            res.data._id
+          }&sort=newest`
         );
       })
-      .then((res) => dispatch({ type: "SET", payload: res.data.reverse() }))
+      .then((res) => dispatch({ type: "SET", payload: res.data }))
       .catch((err) => console.error(err))
       .finally(() => setIsLoading(false));
   }, [username]);

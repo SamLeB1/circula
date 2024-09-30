@@ -8,11 +8,23 @@ export const getPosts = async (req, res) => {
       const { userId } = req.query;
       if (!mongoose.Types.ObjectId.isValid(userId))
         return res.status(400).json({ msg: "Invalid user id." });
-      const posts = await postModel.find({ userId });
-      return res.status(200).json(posts);
+
+      if (req.query.sort === "newest") {
+        const posts = await postModel.find({ userId }).sort({ createdAt: -1 });
+        res.status(200).json(posts);
+      } else {
+        const posts = await postModel.find({ userId });
+        res.status(200).json(posts);
+      }
+    } else {
+      if (req.query.sort === "newest") {
+        const posts = await postModel.find().sort({ createdAt: -1 });
+        res.status(200).json(posts);
+      } else {
+        const posts = await postModel.find();
+        res.status(200).json(posts);
+      }
     }
-    const posts = await postModel.find();
-    res.status(200).json(posts);
   } catch (err) {
     res.status(500).json(err);
   }

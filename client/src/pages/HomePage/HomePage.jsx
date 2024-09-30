@@ -10,8 +10,8 @@ export default function HomePage() {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_SERVER}/posts`)
-      .then((res) => dispatch({ type: "SET", payload: res.data.reverse() }))
+      .get(`${import.meta.env.VITE_SERVER}/posts?sort=newest`)
+      .then((res) => dispatch({ type: "SET", payload: res.data }))
       .catch((err) => console.error(err));
   }, []);
 
